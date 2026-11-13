@@ -1,0 +1,416 @@
+/* =========================================================
+   La Carpeta de Manduq — hoja de estilos
+   Idea visual: la página de inicio es una hoja de carpeta
+   de coleccionista (9 fundas); cada entrada es una carta.
+   ========================================================= */
+
+/* ---------- 1. Variables (tema día / noche) ---------- */
+:root {
+  --azul-carpeta: #23366f;   /* tapas de la carpeta */
+  --azul-hondo: #182650;
+  --papel: #eef1f6;          /* fondo general, gris frío */
+  --tinta: #1a1d29;          /* texto */
+  --tinta-suave: #4a5068;
+  --amarillo-marco: #f2c230; /* marco de las cartas */
+  --rojo: #c92f28;           /* acentos puntuales */
+  --funda: rgba(255, 255, 255, 0.10);
+  --borde-funda: rgba(255, 255, 255, 0.28);
+  --superficie: #ffffff;
+  --linea: #d3d8e4;
+
+  --fuente-titulos: "Bricolage Grotesque", system-ui, sans-serif;
+  --fuente-texto: "Literata", Georgia, serif;
+
+  --ancho-lectura: 40rem;
+  --radio-carta: 10px;
+}
+
+[data-tema="noche"] {
+  --azul-carpeta: #121a36;
+  --azul-hondo: #0c1228;
+  --papel: #1b2138;
+  --tinta: #e6e9f2;
+  --tinta-suave: #a8afc6;
+  --rojo: #f0645c;
+  --funda: rgba(255, 255, 255, 0.05);
+  --borde-funda: rgba(255, 255, 255, 0.16);
+  --superficie: #252c47;
+  --linea: #39415f;
+}
+
+/* ---------- 2. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  transition: background-color .3s, color .3s;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulos);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 .5em;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--amarillo-marco);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+
+[hidden] { display: none !important; }
+
+.saltar {
+  position: absolute; left: 1rem; top: -4rem;
+  background: var(--amarillo-marco); color: #1a1d29;
+  padding: .5rem 1rem; z-index: 100; font-family: var(--fuente-titulos);
+}
+.saltar:focus { top: 1rem; }
+
+/* ---------- 3. Cabecera y navegación ---------- */
+.cabecera {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: .75rem clamp(1rem, 4vw, 3rem);
+  background: var(--azul-carpeta);
+  color: #fff;
+  font-family: var(--fuente-titulos);
+}
+
+.marca {
+  display: flex; align-items: center; gap: .6rem;
+  text-decoration: none; font-weight: 800; line-height: 1;
+  font-size: 1.1rem;
+}
+.marca small { font-weight: 500; font-size: .8rem; opacity: .75; }
+
+.navegacion { display: flex; gap: .25rem; margin-left: auto; }
+
+.navegacion a {
+  text-decoration: none;
+  padding: .4rem .75rem;
+  border-radius: 6px;
+  font-weight: 500; font-size: .95rem;
+  opacity: .8;
+}
+.navegacion a:hover { opacity: 1; background: rgba(255,255,255,.08); }
+.navegacion a[aria-current="page"] {
+  opacity: 1;
+  box-shadow: inset 0 -3px 0 var(--amarillo-marco);
+}
+
+.tema, .menu-movil {
+  background: transparent; color: #fff;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 999px;
+  padding: .35rem .9rem;
+  cursor: pointer;
+  font-family: var(--fuente-titulos); font-size: .9rem;
+  display: flex; align-items: center; gap: .45rem;
+}
+.tema:hover, .menu-movil:hover { background: rgba(255,255,255,.1); }
+
+/* Icono de luna / sol dibujado con CSS */
+.tema-icono {
+  width: 14px; height: 14px; border-radius: 50%;
+  box-shadow: inset -4px -2px 0 0 #fff;
+}
+[data-tema="noche"] .tema-icono { background: var(--amarillo-marco); box-shadow: none; }
+
+.menu-movil { display: none; }
+
+/* Barra de progreso de lectura */
+.progreso { position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 30; pointer-events: none; }
+.progreso span { display: block; height: 100%; width: 0; background: var(--amarillo-marco); }
+
+/* ---------- 4. Vistas (secciones que se muestran/ocultan) ---------- */
+main { min-height: 70vh; }
+
+.vista { animation: aparecer .35s ease-out; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- 5. Inicio: la hoja de carpeta ---------- */
+.vista-inicio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+  padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 4vw, 3rem);
+  max-width: 82rem; margin: 0 auto;
+}
+
+.inicio-intro h1 {
+  font-size: clamp(2.3rem, 4.6vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+.inicio-intro > p { max-width: 34rem; color: var(--tinta-suave); }
+
+.leyenda-rareza { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-size: .95rem; }
+.leyenda-rareza span { white-space: nowrap; color: var(--tinta); }
+
+.simbolo { font-family: var(--fuente-titulos); color: var(--rojo); font-weight: 800; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.75rem; }
+.filtro {
+  font-family: var(--fuente-titulos); font-size: .9rem;
+  background: transparent;
+  border: 1.5px solid var(--linea);
+  padding: .4rem .9rem; border-radius: 999px; cursor: pointer;
+}
+.filtro:hover { border-color: var(--tinta-suave); }
+.filtro.activo { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+
+/* La carpeta: fondo azul con 9 fundas transparentes */
+.carpeta {
+  background: var(--azul-carpeta);
+  border-radius: 6px 18px 18px 6px;
+  padding: clamp(.9rem, 2vw, 1.4rem);
+  /* costura de la tapa */
+  box-shadow: inset 10px 0 0 var(--azul-hondo), 0 22px 40px -24px rgba(24, 38, 80, .55);
+  padding-left: calc(clamp(.9rem, 2vw, 1.4rem) + 10px);
+}
+
+.fundas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(.5rem, 1.2vw, .9rem);
+}
+
+.funda {
+  aspect-ratio: 63 / 88;            /* proporción real de una carta: 63 x 88 mm */
+  background: var(--funda);
+  border: 1px solid var(--borde-funda);
+  border-radius: 4px;
+  padding: 5px;
+  position: relative;
+}
+/* brillo del plástico de la funda */
+.funda::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,.14) 0 18%, transparent 30% 100%);
+  border-radius: 4px;
+}
+.funda-vacia { opacity: .7; }
+.funda.oculta .carta { opacity: .18; filter: grayscale(1); pointer-events: none; }
+
+/* La carta */
+.carta {
+  height: 100%;
+  display: flex; flex-direction: column;
+  text-decoration: none;
+  background: var(--amarillo-marco);
+  border-radius: var(--radio-carta);
+  padding: 7px;
+  color: #1a1d29;
+  transition: transform .25s ease, opacity .25s, filter .25s;
+}
+.carta:hover { transform: translateY(-6px) rotate(-1deg); }
+
+.carta-arte {
+  background: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid #c99a12;
+  flex: 1 1 auto; min-height: 0;
+}
+.carta-arte img { width: 100%; height: 100%; object-fit: cover; }
+
+.carta-nombre {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: clamp(.72rem, 1.15vw, .98rem);
+  line-height: 1.15;
+  padding: .45rem .2rem .2rem;
+}
+.carta-pie {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--fuente-titulos); font-size: clamp(.6rem, .9vw, .75rem);
+  padding: 0 .2rem;
+}
+.carta-pie .simbolo { color: #1a1d29; font-size: 1em; }
+
+/* La entrada "avanzada" es la carta rara: lleva brillo holográfico al pasar el ratón */
+.carta-holo { position: relative; overflow: hidden; }
+.carta-holo::before {
+  content: ""; position: absolute; inset: -50%;
+  background: linear-gradient(115deg, transparent 40%, rgba(120, 220, 255, .55) 47%, rgba(255, 130, 230, .5) 52%, rgba(255, 255, 160, .55) 57%, transparent 64%);
+  transform: translateX(-60%);
+  transition: transform .9s ease;
+  pointer-events: none; mix-blend-mode: soft-light;
+}
+.carta-holo:hover::before, .carta-holo:focus-visible::before { transform: translateX(60%); }
+
+.carpeta-nota {
+  margin: .9rem 0 0; color: rgba(255,255,255,.75);
+  font-family: var(--fuente-titulos); font-size: .9rem;
+}
+
+/* ---------- 6. Entradas ---------- */
+.entrada, .vista-sobre-mi {
+  max-width: 50rem; margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem) 1rem;
+}
+
+.entrada-meta {
+  font-family: var(--fuente-titulos); font-size: .95rem; color: var(--tinta-suave);
+  display: flex; flex-wrap: wrap; gap: .3rem 1rem; margin: 0 0 1rem;
+}
+.entrada-meta .simbolo { margin-right: -.6rem; }
+
+.entrada-cabecera h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 800; max-width: 18ch; }
+.entrada-entradilla { font-size: 1.2rem; color: var(--tinta-suave); max-width: var(--ancho-lectura); }
+
+.entrada-cuerpo { max-width: var(--ancho-lectura); }
+.entrada-cuerpo h2 { font-size: 1.55rem; margin-top: 2.2rem; }
+.entrada-cuerpo li { margin-bottom: .5rem; }
+
+figure { margin: 2rem 0; }
+figure img {
+  border-radius: 8px;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+}
+figcaption { font-size: .9rem; color: var(--tinta-suave); margin-top: .5rem; font-style: italic; }
+.figura-ancha { margin: 2.2rem 0 2.5rem; }
+.figura-ancha img { width: 100%; }
+
+.consejo {
+  border-left: 5px solid var(--amarillo-marco);
+  background: var(--superficie);
+  padding: .9rem 1.2rem;
+  border-radius: 0 8px 8px 0;
+  margin: 2rem 0;
+}
+.consejo p { margin: 0; }
+
+/* ---------- 7. Formularios (calculadora y comentarios) ---------- */
+.calculadora, .form-comentario {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+.calculadora { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin: 1.5rem 0; }
+
+.campo { display: flex; flex-direction: column; gap: .3rem; }
+.campo label { font-family: var(--fuente-titulos); font-size: .9rem; font-weight: 500; }
+.campo input, .campo textarea {
+  border: 1.5px solid var(--linea); border-radius: 6px;
+  padding: .5rem .65rem; background: var(--papel);
+}
+.campo input:focus, .campo textarea:focus { border-color: var(--azul-carpeta); outline: none; box-shadow: 0 0 0 3px rgba(242, 194, 48, .55); }
+
+.resultado {
+  grid-column: 1 / -1;
+  font-family: var(--fuente-titulos); font-size: 1.05rem;
+  padding: .8rem 1rem; border-radius: 8px;
+  background: var(--papel);
+}
+.resultado strong { font-size: 1.35rem; }
+.resultado.pierde strong { color: var(--rojo); }
+.resultado.gana strong { color: #1f8a4c; }
+[data-tema="noche"] .resultado.gana strong { color: #5fd38d; }
+
+/* ---------- 8. Interacción: me gusta, comentarios, anterior/siguiente ---------- */
+.interaccion {
+  max-width: var(--ancho-lectura);
+  margin: 0 auto;
+  padding: 1rem clamp(1rem, 4vw, 2rem) 3rem;
+  box-sizing: content-box;
+}
+.interaccion h2 { font-size: 1.35rem; margin-top: 2.5rem; }
+
+.me-gusta { display: flex; align-items: center; gap: .8rem; padding-top: 1.5rem; border-top: 1px solid var(--linea); }
+#boton-me-gusta {
+  font-family: var(--fuente-titulos);
+  border: 1.5px solid var(--rojo); color: var(--rojo); background: transparent;
+  border-radius: 999px; padding: .4rem 1rem; cursor: pointer;
+}
+#boton-me-gusta[aria-pressed="true"] { background: var(--rojo); color: #fff; }
+#boton-me-gusta[aria-pressed="true"] span:first-child { display: inline-block; animation: latido .4s; }
+@keyframes latido { 50% { transform: scale(1.4); } }
+#contador-me-gusta { font-family: var(--fuente-titulos); color: var(--tinta-suave); font-size: .95rem; }
+
+.comentarios { list-style: none; padding: 0; margin: 0 0 1.25rem; }
+.comentarios li { padding: .8rem 0; border-bottom: 1px solid var(--linea); }
+.comentarios .autor { font-family: var(--fuente-titulos); font-weight: 700; }
+.comentarios .fecha { font-family: var(--fuente-titulos); font-size: .8rem; color: var(--tinta-suave); margin-left: .5rem; }
+.comentarios p { margin: .2rem 0 0; }
+.comentarios .vacio { color: var(--tinta-suave); font-style: italic; border: 0; }
+
+.form-comentario { display: grid; gap: .9rem; }
+.form-comentario button {
+  justify-self: start;
+  font-family: var(--fuente-titulos); font-weight: 700;
+  background: var(--azul-carpeta); color: #fff; border: 0;
+  border-radius: 8px; padding: .6rem 1.2rem; cursor: pointer;
+}
+.form-comentario button:hover { background: var(--azul-hondo); }
+.error { color: var(--rojo); margin: 0; font-family: var(--fuente-titulos); font-size: .9rem; min-height: 0; }
+.error:empty { display: none; }
+.nota-local { margin: 0; font-size: .85rem; color: var(--tinta-suave); }
+
+.anterior-siguiente { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; }
+.anterior-siguiente a {
+  font-family: var(--fuente-titulos); font-weight: 700; text-decoration: none;
+  border: 1.5px solid var(--linea); border-radius: 8px; padding: .7rem 1rem;
+  max-width: 48%;
+}
+.anterior-siguiente a:hover { border-color: var(--tinta-suave); }
+.anterior-siguiente a small { display: block; font-weight: 500; color: var(--tinta-suave); font-size: .8rem; }
+#enlace-siguiente { margin-left: auto; text-align: right; }
+
+/* ---------- 9. Sobre mí y pie ---------- */
+.vista-sobre-mi h1 { font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 800; }
+.sobre-mi-cuerpo { display: flex; gap: 1.5rem; align-items: flex-start; max-width: var(--ancho-lectura); }
+.sobre-mi-cuerpo img { flex: none; }
+.aviso-legal { font-size: .85rem; color: var(--tinta-suave); }
+
+.pie {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  background: var(--azul-hondo); color: rgba(255,255,255,.8);
+  font-family: var(--fuente-titulos); font-size: .85rem;
+}
+.pie p { margin: 0; }
+
+/* ---------- 10. Responsive ---------- */
+@media (max-width: 900px) {
+  .vista-inicio { grid-template-columns: 1fr; }
+  .menu-movil { display: flex; margin-left: auto; }
+  .navegacion {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; padding: .5rem 1rem 1rem;
+    background: var(--azul-carpeta);
+  }
+  .navegacion.abierta { display: flex; }
+  .tema-texto { display: none; }
+}
+
+@media (max-width: 560px) {
+  .calculadora { grid-template-columns: 1fr; }
+  .sobre-mi-cuerpo { flex-direction: column; }
+  .carta-pie span:first-child { display: none; }
+  .carta-pie { justify-content: flex-end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380"><rect width="760" height="380" fill="#eef1f6"/>
+<g font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#1a1d29">
+<g transform="translate(40 70)"><rect width="120" height="168" rx="8" fill="#f2c230"/><rect x="10" y="12" width="100" height="80" rx="3" fill="#fff"/><path d="M26 80l22-34 16 22 10-12 22 24z" fill="#23366f"/><text x="60" y="210" text-anchor="middle">Carta</text></g>
+<text x="190" y="160" font-size="34" fill="#9aa3ba">+</text>
+<g transform="translate(225 64)"><rect width="132" height="180" rx="8" fill="#cfe0f7" fill-opacity=".6" stroke="#7d93bf" stroke-width="2"/><text x="66" y="222" text-anchor="middle">Funda ajustada</text></g>
+<text x="380" y="160" font-size="34" fill="#9aa3ba">+</text>
+<g transform="translate(410 56)"><rect width="146" height="196" rx="9" fill="#e6ecf8" fill-opacity=".7" stroke="#23366f" stroke-width="2"/><text x="73" y="238" text-anchor="middle">Funda normal</text></g>
+<text x="578" y="160" font-size="34" fill="#9aa3ba">+</text>
+<g transform="translate(608 40)"><rect width="122" height="226" rx="4" fill="#fff" fill-opacity=".5" stroke="#1a1d29" stroke-width="5"/><path d="M14 14h40L14 70z" fill="#fff"/><text x="61" y="268" text-anchor="middle">Toploader</text></g>
+</g></svg>
