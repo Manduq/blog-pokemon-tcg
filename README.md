@@ -19,7 +19,7 @@ img/                Ilustraciones originales en SVG
 - Entradas cargadas por AJAX: `fetch('data/entradas.json')` trae el contenido y JavaScript crea las cartas, el menú y las secciones. Si la petición falla, se muestra un aviso.
 - Página única (single page): el menú muestra u oculta cada sección según el `#hash` de la URL, así funcionan los botones atrás/adelante del navegador.
 - Inicio con forma de hoja de carpeta de coleccionista: cada entrada es una carta, y su símbolo de rareza indica el nivel.
-- Filtro de entradas por nivel.
+- Buscador en la portada (busca en título y texto, sin importar tildes) combinado con el filtro por nivel.
 - Modo día / noche que se recuerda entre visitas (`localStorage`).
 - Tiempo de lectura calculado y barra de progreso al leer.
 - "Me gusta" y comentarios por entrada, guardados en el navegador.
