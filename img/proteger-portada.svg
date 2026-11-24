@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="#e4f1ea"/>
-<rect x="58" y="30" width="124" height="176" rx="8" fill="#ffffff" stroke="#9fb3a8" stroke-width="3"/>
-<rect x="68" y="44" width="104" height="150" rx="6" fill="#d6ece2" opacity=".8"/>
-<rect x="76" y="54" width="88" height="128" rx="6" fill="#f2c230"/><rect x="83" y="62" width="74" height="60" rx="3" fill="#fff"/>
-<path d="M95 108l15-24 12 16 8-10 16 18z" fill="#23366f"/><rect x="84" y="130" width="60" height="7" rx="3" fill="#8a6a00" opacity=".5"/><rect x="84" y="143" width="44" height="6" rx="3" fill="#8a6a00" opacity=".35"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="#ecebe7"/>
+<rect x="58" y="30" width="124" height="176" rx="8" fill="#ffffff" stroke="#b9b5ab" stroke-width="3"/>
+<rect x="68" y="44" width="104" height="150" rx="6" fill="#e2e0da" opacity=".8"/>
+<rect x="76" y="54" width="88" height="128" rx="6" fill="#cbb27a"/><rect x="83" y="62" width="74" height="60" rx="3" fill="#fff"/>
+<path d="M95 108l15-24 12 16 8-10 16 18z" fill="#2f3540"/><rect x="84" y="130" width="60" height="7" rx="3" fill="#6f5d38" opacity=".5"/><rect x="84" y="143" width="44" height="6" rx="3" fill="#6f5d38" opacity=".35"/>
 <path d="M66 40l30 0-30 40z" fill="#fff" opacity=".55"/></svg>

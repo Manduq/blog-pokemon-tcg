@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380"><rect width="760" height="380" fill="#fff"/>
-<g font-family="Arial, Helvetica, sans-serif" fill="#1a1d29">
-<line x1="120" y1="310" x2="700" y2="310" stroke="#1a1d29" stroke-width="2"/>
-<rect x="180" y="110" width="140" height="200" fill="#23366f"/><text x="250" y="96" text-anchor="middle" font-size="22" font-weight="700">5,00 €</text><text x="250" y="340" text-anchor="middle" font-size="18">Precio del sobre</text>
-<rect x="400" y="190" width="140" height="64" fill="#c92f28"/><rect x="400" y="254" width="140" height="56" fill="#f2c230"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#1d2027">
+<line x1="120" y1="310" x2="700" y2="310" stroke="#1d2027" stroke-width="2"/>
+<rect x="180" y="110" width="140" height="200" fill="#2f3540"/><text x="250" y="96" text-anchor="middle" font-size="22" font-weight="700">5,00 €</text><text x="250" y="340" text-anchor="middle" font-size="18">Precio del sobre</text>
+<rect x="400" y="190" width="140" height="64" fill="#8c3a33"/><rect x="400" y="254" width="140" height="56" fill="#cbb27a"/>
 <text x="470" y="176" text-anchor="middle" font-size="22" font-weight="700">3,20 €</text><text x="470" y="340" text-anchor="middle" font-size="18">Valor esperado</text>
 <text x="552" y="226" font-size="15">carta buena: 8 % × 30 €</text><text x="552" y="288" font-size="15">resto: 0,80 €</text>
-<path d="M330 110h220" stroke="#9aa3ba" stroke-dasharray="6 6" stroke-width="2"/><text x="340" y="150" font-size="16" fill="#c92f28" font-weight="700">−1,80 € por sobre</text>
+<path d="M330 110h220" stroke="#a3a7b0" stroke-dasharray="6 6" stroke-width="2"/><text x="340" y="150" font-size="16" fill="#8c3a33" font-weight="700">−1,80 € por sobre</text>
 </g></svg>

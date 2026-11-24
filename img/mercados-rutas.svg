@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380"><rect width="760" height="380" fill="#eef1f6"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380"><rect width="760" height="380" fill="#f4f4f2"/>
 <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
-<text x="190" y="44" font-size="22" font-weight="700" fill="#23366f">Cartas en inglés</text>
-<text x="570" y="44" font-size="22" font-weight="700" fill="#c92f28">Cartas en japonés</text>
-<rect x="60" y="70" width="260" height="52" rx="8" fill="#23366f"/><text x="190" y="102" fill="#fff" font-size="17">Cardmarket (Europa)</text>
-<rect x="60" y="134" width="260" height="52" rx="8" fill="#23366f"/><text x="190" y="166" fill="#fff" font-size="17">Tiendas especializadas</text>
-<rect x="60" y="198" width="260" height="52" rx="8" fill="#23366f"/><text x="190" y="230" fill="#fff" font-size="17">Particulares (Vinted, Wallapop)</text>
-<rect x="440" y="70" width="260" height="52" rx="8" fill="#c92f28"/><text x="570" y="102" fill="#fff" font-size="17">Mercari, Yahoo! Subastas</text>
-<path d="M570 122v22" stroke="#1a1d29" stroke-width="2.5"/><path d="M563 138l7 9 7-9" fill="#1a1d29"/>
-<rect x="440" y="150" width="260" height="52" rx="8" fill="#fff" stroke="#c92f28" stroke-width="2.5"/><text x="570" y="182" fill="#1a1d29" font-size="17">Intermediario (proxy)</text>
-<path d="M570 202v22" stroke="#1a1d29" stroke-width="2.5"/><path d="M563 218l7 9 7-9" fill="#1a1d29"/>
-<rect x="440" y="230" width="260" height="52" rx="8" fill="#fff" stroke="#c92f28" stroke-width="2.5" stroke-dasharray="6 4"/><text x="570" y="262" fill="#1a1d29" font-size="17">Envío + IVA de importación</text>
-<path d="M190 250v40M570 282v8" stroke="#1a1d29" stroke-width="2.5"/>
-<rect x="250" y="300" width="260" height="56" rx="28" fill="#f2c230"/><text x="380" y="334" fill="#1a1d29" font-size="18" font-weight="700">Tu carpeta en España</text>
-<path d="M190 290h60M570 290v10h-60" stroke="#1a1d29" stroke-width="2.5" fill="none"/>
+<text x="190" y="44" font-size="22" font-weight="700" fill="#2f3540">Cartas en inglés</text>
+<text x="570" y="44" font-size="22" font-weight="700" fill="#8c3a33">Cartas en japonés</text>
+<rect x="60" y="70" width="260" height="52" rx="8" fill="#2f3540"/><text x="190" y="102" fill="#fff" font-size="17">Cardmarket (Europa)</text>
+<rect x="60" y="134" width="260" height="52" rx="8" fill="#2f3540"/><text x="190" y="166" fill="#fff" font-size="17">Tiendas especializadas</text>
+<rect x="60" y="198" width="260" height="52" rx="8" fill="#2f3540"/><text x="190" y="230" fill="#fff" font-size="17">Particulares (Vinted, Wallapop)</text>
+<rect x="440" y="70" width="260" height="52" rx="8" fill="#8c3a33"/><text x="570" y="102" fill="#fff" font-size="17">Mercari, Yahoo! Subastas</text>
+<path d="M570 122v22" stroke="#1d2027" stroke-width="2.5"/><path d="M563 138l7 9 7-9" fill="#1d2027"/>
+<rect x="440" y="150" width="260" height="52" rx="8" fill="#fff" stroke="#8c3a33" stroke-width="2.5"/><text x="570" y="182" fill="#1d2027" font-size="17">Intermediario (proxy)</text>
+<path d="M570 202v22" stroke="#1d2027" stroke-width="2.5"/><path d="M563 218l7 9 7-9" fill="#1d2027"/>
+<rect x="440" y="230" width="260" height="52" rx="8" fill="#fff" stroke="#8c3a33" stroke-width="2.5" stroke-dasharray="6 4"/><text x="570" y="262" fill="#1d2027" font-size="17">Envío + IVA de importación</text>
+<path d="M190 250v40M570 282v8" stroke="#1d2027" stroke-width="2.5"/>
+<rect x="250" y="300" width="260" height="56" rx="28" fill="#cbb27a"/><text x="380" y="334" fill="#1d2027" font-size="18" font-weight="700">Tu carpeta en España</text>
+<path d="M190 290h60M570 290v10h-60" stroke="#1d2027" stroke-width="2.5" fill="none"/>
 </g></svg>
