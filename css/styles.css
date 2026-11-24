@@ -414,3 +414,7 @@ figcaption { font-size: .9rem; color: var(--tinta-suave); margin-top: .5rem; fon
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* Enlaces del pie (código en GitHub y volver al inicio) */
+.pie-enlaces { display: flex; gap: 1.25rem; }
+.pie-enlaces a { color: #fff; }

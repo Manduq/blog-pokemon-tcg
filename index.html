@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="stylesheet" href="css/styles.css?v=3">
   <script>
     // Aplica el tema guardado antes de pintar la página (evita el parpadeo)
     try { if (localStorage.getItem('tema') === 'noche') document.documentElement.dataset.tema = 'noche'; } catch (e) {}
@@ -80,7 +80,7 @@
       <div class="sobre-mi-cuerpo">
         <img src="img/favicon.svg" alt="" width="96" height="96">
         <div>
-          <p>Soy Manduq. Trabajo en IT en Barcelona y estudio Ingeniería Informática en la UNIR. Este blog es la Actividad 1 de la asignatura <em>Desarrollo de aplicaciones en red</em>, y lo he aprovechado para escribir sobre lo que más me entretiene fuera del trabajo: coleccionar cartas Pokémon.</p>
+          <p>Soy Edgar Arbonés Chaparro, aunque en internet me encontraréis como Manduq. Trabajo en IT en Barcelona y estudio Ingeniería Informática en la UNIR. Este blog es la Actividad 1 de la asignatura <em>Desarrollo de aplicaciones en red</em>, y lo he aprovechado para escribir sobre lo que más me entretiene fuera del trabajo: coleccionar cartas Pokémon.</p>
           <p>El sitio está hecho a mano con HTML, CSS y JavaScript, sin frameworks, y se publica con GitHub Pages.</p>
           <p class="aviso-legal">Pokémon es una marca de Nintendo, Creatures y GAME FREAK. Este es un blog personal sin relación con ellas; todas las ilustraciones son originales.</p>
         </div>
@@ -122,10 +122,13 @@
   </main>
 
   <footer class="pie">
-    <p>La Carpeta de Manduq · Actividad 1 · Desarrollo de aplicaciones en red · UNIR 2026</p>
-    <a href="#inicio">Volver al inicio</a>
+    <p>La Carpeta de Manduq · Edgar Arbonés Chaparro · Actividad 1 · Desarrollo de aplicaciones en red · UNIR 2026</p>
+    <nav class="pie-enlaces" aria-label="Enlaces del pie">
+      <a href="https://github.com/Manduq/blog-pokemon-tcg" target="_blank" rel="noopener">Código en GitHub</a>
+      <a href="#inicio">Volver al inicio</a>
+    </nav>
   </footer>
 
-  <script src="js/app.js?v=2"></script>
+  <script src="js/app.js?v=3"></script>
 </body>
 </html>
