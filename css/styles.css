@@ -418,3 +418,41 @@ figcaption { font-size: .9rem; color: var(--tinta-suave); margin-top: .5rem; fon
 /* Enlaces del pie (código en GitHub y volver al inicio) */
 .pie-enlaces { display: flex; gap: 1.25rem; }
 .pie-enlaces a { color: #fff; }
+
+/* Test "¿Qué tipo de coleccionista eres?" (entrada 5) */
+.test {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  display: grid; gap: 1rem;
+}
+.test fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .4rem .6rem; }
+.test legend { font-family: var(--fuente-titulos); font-weight: 700; margin-bottom: .4rem; width: 100%; }
+.test label {
+  font-family: var(--fuente-titulos); font-size: .9rem;
+  border: 1.5px solid var(--linea); border-radius: 999px;
+  padding: .35rem .85rem; cursor: pointer;
+}
+.test label:has(input:checked) { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+.test input { accent-color: var(--amarillo-marco); margin: 0 .3rem 0 0; }
+.test button {
+  justify-self: start;
+  font-family: var(--fuente-titulos); font-weight: 700;
+  background: var(--azul-carpeta); color: #fff; border: 0;
+  border-radius: 8px; padding: .6rem 1.2rem; cursor: pointer;
+}
+.test .resultado:empty { display: none; }
+
+/* Con 5 entradas el menú necesita más ancho: se pasa antes al menú desplegable */
+@media (max-width: 1180px) {
+  .menu-movil { display: flex; margin-left: auto; }
+  .navegacion {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; padding: .5rem 1rem 1rem;
+    background: var(--azul-carpeta);
+  }
+  .navegacion.abierta { display: flex; }
+}

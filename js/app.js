@@ -8,6 +8,7 @@
    5. Tiempo de lectura y barra de progreso
    6. "Me gusta" y comentarios (guardados en localStorage)
    7. Calculadora de valor esperado
+   8. Test "¿Qué tipo de coleccionista eres?"
    ========================================================= */
 
 // Lista de entradas: se rellena al cargar data/entradas.json (orden cronológico)
@@ -58,6 +59,7 @@ async function cargarEntradas() {
     pintarArticulos();
     calcularTiempoLectura();
     iniciarCalculadora();
+    iniciarTest();
 
     document.getElementById('nota-filtro').textContent =
       `${ENTRADAS.length} entradas. Los huecos libres se irán llenando.`;
@@ -397,6 +399,39 @@ function iniciarCalculadora() {
   calculadora.addEventListener('input', calcular);
   calculadora.addEventListener('submit', e => e.preventDefault());
   calcular();
+}
+
+/* =========================================================
+   8. TEST "¿QUÉ TIPO DE COLECCIONISTA ERES?" (entrada 5)
+   ========================================================= */
+const CONSEJOS_TEST = {
+  singles: '<strong>Singles.</strong> Compra sueltas solo las cartas que te gustan y guárdalas en una carpeta. Gastas menos y cada carta tiene sentido para ti.',
+  base: '<strong>Base set.</strong> Elige un set que te guste y completa una copia de cada número. Es un reto con final claro.',
+  master: '<strong>Master set.</strong> Tienes tiempo y ganas: ve a por un set completo con todas sus variantes. Empieza por uno pequeño o japonés, que tiene menos variantes.',
+  sellado: '<strong>Sellado.</strong> Guarda producto sin abrir, empezando por una o dos cajas de un set que te guste y en un sitio seco.',
+  selladoPequeño: '<strong>Sellado, pero pequeño.</strong> Con poco espacio, mejor sobres sueltos o un producto especial que una pila de cajas.'
+};
+
+function iniciarTest() {
+  const test = document.getElementById('test-coleccionista');
+  if (!test) return;
+  const salida = document.getElementById('resultado-test');
+
+  test.addEventListener('submit', evento => {
+    evento.preventDefault();
+    const gusto = test.gusto.value, espacio = test.espacio.value, tiempo = test.tiempo.value;
+
+    if (!gusto || !espacio || !tiempo) {
+      salida.textContent = 'Responde a las tres preguntas para ver tu resultado.';
+      return;
+    }
+
+    let tipo = 'singles';
+    if (gusto === 'completar') tipo = tiempo === 'mucho' ? 'master' : 'base';
+    if (gusto === 'cerrado') tipo = espacio === 'poco' ? 'selladoPequeño' : 'sellado';
+
+    salida.innerHTML = CONSEJOS_TEST[tipo];
+  });
 }
 
 /* ---------- Arranque ---------- */

@@ -24,6 +24,7 @@ img/                Ilustraciones originales en SVG
 - Tiempo de lectura calculado y barra de progreso al leer.
 - "Me gusta" y comentarios por entrada, guardados en el navegador.
 - Calculadora de valor esperado de un sobre (entrada 3).
+- Test "¿Qué tipo de coleccionista eres?" con tres preguntas (entrada 5).
 - Menú adaptado a móvil, foco visible con teclado y respeto a `prefers-reduced-motion`.
 
 ## Ejecutar en local

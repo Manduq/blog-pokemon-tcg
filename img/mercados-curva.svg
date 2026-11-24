@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 320"><rect width="680" height="320" fill="#fff"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#1a1d29">
+<line x1="70" y1="260" x2="640" y2="260" stroke="#1a1d29" stroke-width="2"/><line x1="70" y1="40" x2="70" y2="260" stroke="#1a1d29" stroke-width="2"/>
+<text x="355" y="300" text-anchor="middle" font-size="15">Tiempo desde el lanzamiento</text>
+<text x="30" y="150" font-size="15" transform="rotate(-90 30 150)" text-anchor="middle">Precio de una carta</text>
+<path d="M80 80 C 140 70, 170 170, 260 200 S 520 215, 630 180" stroke="#c92f28" stroke-width="4" fill="none"/>
+<path d="M230 120 C 280 110, 320 200, 400 215 S 560 220, 630 205" stroke="#23366f" stroke-width="4" fill="none" stroke-dasharray="10 6"/>
+<rect x="420" y="50" width="16" height="4" fill="#c92f28"/><text x="444" y="57" font-size="14">Japonés: sale antes</text>
+<rect x="420" y="74" width="16" height="4" fill="#23366f"/><text x="444" y="81" font-size="14">Inglés: llega meses después</text>
+<text x="640" y="30" font-size="12" text-anchor="end" fill="#4a5068">Esquema ilustrativo, no son datos reales</text>
+</g></svg>
