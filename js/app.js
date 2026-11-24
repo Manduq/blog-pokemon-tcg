@@ -49,7 +49,7 @@ const fechaCorta = iso => new Date(iso + 'T12:00:00').toLocaleDateString('es-ES'
 async function cargarEntradas() {
   const lista = document.getElementById('fundas');
   try {
-    const respuesta = await fetch('data/entradas.json');
+    const respuesta = await fetch('data/entradas.json', { cache: 'no-cache' }); // no-cache: pregunta siempre al servidor si hay una versión nueva
     if (!respuesta.ok) throw new Error(`El servidor respondió ${respuesta.status}`);
     ENTRADAS = await respuesta.json();
 
