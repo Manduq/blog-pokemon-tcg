@@ -4,7 +4,7 @@
    1. Navegación por secciones (single page con #hash)
    2. Modo día / noche
    3. Menú móvil
-   4. Filtro de entradas por nivel
+   4. Buscador y filtro de entradas por nivel
    5. Tiempo de lectura y barra de progreso
    6. "Me gusta" y comentarios (guardados en localStorage)
    7. Calculadora de valor esperado
@@ -60,6 +60,7 @@ async function cargarEntradas() {
     calcularTiempoLectura();
     iniciarCalculadora();
     iniciarTest();
+    prepararBusqueda();
 
     document.getElementById('nota-filtro').textContent =
       `${ENTRADAS.length} entradas. Los huecos libres se irán llenando.`;
@@ -212,35 +213,73 @@ function cerrarMenuMovil() {
 }
 
 /* =========================================================
-   4. FILTRO DE ENTRADAS POR NIVEL (rareza)
+   4. BUSCADOR Y FILTRO POR NIVEL (rareza)
+   Los dos se combinan: una carta se ve si es del nivel elegido
+   Y contiene el texto buscado (en título, entradilla o cuerpo).
    ========================================================= */
 const botonesFiltro = document.querySelectorAll('.filtro');
 const notaFiltro = document.getElementById('nota-filtro');
+const campoBuscar = document.getElementById('buscar');
+let nivelElegido = 'todas';
+
+// Pasa a minúsculas y quita tildes, para que "japones" encuentre "japonés"
+const normalizar = texto => texto.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+// Texto en el que se busca cada entrada (sin etiquetas HTML), preparado una vez al cargar el JSON
+const textoBuscable = {};
+function prepararBusqueda() {
+  const auxiliar = document.createElement('div');
+  ENTRADAS.forEach(e => {
+    auxiliar.innerHTML = e.cuerpo;
+    textoBuscable[e.id] = normalizar(`${e.titulo} ${e.entradilla} ${auxiliar.textContent}`);
+  });
+}
+
+function aplicarFiltros() {
+  const busqueda = normalizar(campoBuscar.value.trim());
+  let visibles = 0;
+
+  // En vez de quitar las cartas, se "apagan" para que la carpeta mantenga su forma
+  document.querySelectorAll('.funda[data-nivel]').forEach(funda => {
+    const id = funda.querySelector('.carta').hash.slice(1);
+    const nivelOk = nivelElegido === 'todas' || funda.dataset.nivel === nivelElegido;
+    const textoOk = !busqueda || (textoBuscable[id] || '').includes(busqueda);
+    const coincide = nivelOk && textoOk;
+    funda.classList.toggle('oculta', !coincide);
+    funda.querySelector('.carta').tabIndex = coincide ? 0 : -1;
+    if (coincide) visibles++;
+  });
+
+  const plural = n => `${n} ${n === 1 ? 'entrada' : 'entradas'}`;
+  if (visibles === 0) {
+    notaFiltro.textContent = 'Ninguna entrada coincide. Prueba con otra palabra u otro nivel.';
+  } else if (busqueda) {
+    notaFiltro.textContent = `${plural(visibles)} con «${campoBuscar.value.trim()}».`;
+  } else if (nivelElegido !== 'todas') {
+    notaFiltro.textContent = `${plural(visibles)} de este nivel.`;
+  } else {
+    notaFiltro.textContent = `${plural(ENTRADAS.length)}. Los huecos libres se irán llenando.`;
+  }
+}
 
 botonesFiltro.forEach(boton => {
   boton.addEventListener('click', () => {
-    const filtro = boton.dataset.filtro;
-
+    nivelElegido = boton.dataset.filtro;
     botonesFiltro.forEach(b => {
       const activo = b === boton;
       b.classList.toggle('activo', activo);
       b.setAttribute('aria-pressed', String(activo));
     });
-
-    // En vez de quitar las cartas, se "apagan" para que la carpeta mantenga su forma
-    let visibles = 0;
-    // Se buscan en cada clic porque las cartas se crean tras cargar el JSON
-    document.querySelectorAll('.funda[data-nivel]').forEach(funda => {
-      const coincide = filtro === 'todas' || funda.dataset.nivel === filtro;
-      funda.classList.toggle('oculta', !coincide);
-      funda.querySelector('.carta').tabIndex = coincide ? 0 : -1;
-      if (coincide) visibles++;
-    });
-
-    notaFiltro.textContent = filtro === 'todas'
-      ? `${ENTRADAS.length} entradas. Los huecos libres se irán llenando.`
-      : `${visibles} ${visibles === 1 ? 'entrada' : 'entradas'} de este nivel.`;
+    aplicarFiltros();
   });
+});
+
+// Se filtra mientras se escribe (evento input)
+campoBuscar.addEventListener('input', aplicarFiltros);
+
+// Escape borra la búsqueda
+campoBuscar.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { campoBuscar.value = ''; aplicarFiltros(); }
 });
 
 /* =========================================================

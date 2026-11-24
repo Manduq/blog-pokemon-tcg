@@ -456,3 +456,14 @@ figcaption { font-size: .9rem; color: var(--tinta-suave); margin-top: .5rem; fon
   }
   .navegacion.abierta { display: flex; }
 }
+
+/* Buscador de la portada */
+.buscador { display: flex; flex-direction: column; gap: .35rem; margin-top: 1.75rem; max-width: 30rem; }
+.buscador label { font-family: var(--fuente-titulos); font-weight: 700; font-size: .95rem; }
+.buscador input {
+  font-family: var(--fuente-titulos);
+  border: 1.5px solid var(--linea); border-radius: 999px;
+  padding: .6rem 1.1rem; background: var(--superficie);
+}
+.buscador input:focus { outline: none; border-color: var(--azul-carpeta); box-shadow: 0 0 0 3px rgba(242, 194, 48, .55); }
+.buscador + .filtros { margin-top: .9rem; }
