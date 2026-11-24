@@ -1,5 +1,6 @@
 /* =========================================================
    La Carpeta de Manduq — lógica del blog (JavaScript sin librerías)
+   0. Carga de las entradas por AJAX (fetch de data/entradas.json)
    1. Navegación por secciones (single page con #hash)
    2. Modo día / noche
    3. Menú móvil
@@ -9,15 +10,17 @@
    7. Calculadora de valor esperado
    ========================================================= */
 
-// Orden de las entradas: se usa para los enlaces anterior / siguiente
-const ENTRADAS = [
-  { id: 'japones-o-ingles', titulo: '¿Coleccionar en japonés o en inglés?' },
-  { id: 'proteger-cartas', titulo: 'Proteger tus cartas sin gastar de más' },
-  { id: 'sobres-o-sueltas', titulo: 'Abrir sobres o comprar sueltas' }
-];
+// Lista de entradas: se rellena al cargar data/entradas.json (orden cronológico)
+let ENTRADAS = [];
 
-const vistas = document.querySelectorAll('.vista');
-const enlacesMenu = document.querySelectorAll('.navegacion a');
+// Cómo se muestra cada nivel: igual que la rareza de una carta
+const NIVELES = {
+  comun:       { simbolo: '●', texto: 'Para empezar' },
+  infrecuente: { simbolo: '◆', texto: 'Intermedio' },
+  rara:        { simbolo: '★', texto: 'Avanzado' }
+};
+const FUNDAS_POR_HOJA = 9;
+
 const bloqueInteraccion = document.getElementById('interaccion');
 
 /* ---------- Pequeño ayudante para localStorage (puede fallar en modo privado) ---------- */
@@ -34,6 +37,105 @@ const almacen = {
 };
 
 /* =========================================================
+   0. CARGA DE ENTRADAS POR AJAX
+   El contenido de las entradas no está en index.html: se pide al
+   servidor el fichero data/entradas.json con fetch() y, con los datos
+   recibidos, se crean las cartas de la portada, los enlaces del menú
+   y una sección <article> por entrada.
+   ========================================================= */
+const fechaLarga = iso => new Date(iso + 'T12:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+const fechaCorta = iso => new Date(iso + 'T12:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+
+async function cargarEntradas() {
+  const lista = document.getElementById('fundas');
+  try {
+    const respuesta = await fetch('data/entradas.json');
+    if (!respuesta.ok) throw new Error(`El servidor respondió ${respuesta.status}`);
+    ENTRADAS = await respuesta.json();
+
+    pintarMenu();
+    pintarCartas();
+    pintarArticulos();
+    calcularTiempoLectura();
+    iniciarCalculadora();
+
+    document.getElementById('nota-filtro').textContent =
+      `${ENTRADAS.length} entradas. Los huecos libres se irán llenando.`;
+  } catch (error) {
+    console.error('No se pudieron cargar las entradas:', error);
+    document.getElementById('nota-filtro').textContent =
+      'No se han podido cargar las entradas. Recarga la página; si abres el blog en local, usa un servidor (python -m http.server).';
+  } finally {
+    lista.removeAttribute('aria-busy');
+    mostrarVista(); // vuelve a mostrar la vista del #hash ahora que existen las entradas
+  }
+}
+
+// Un enlace por entrada en el menú, entre "Inicio" y "Sobre mí"
+function pintarMenu() {
+  const sobreMi = nav.querySelector('[data-ruta="sobre-mi"]');
+  ENTRADAS.forEach(e => {
+    const a = document.createElement('a');
+    a.href = `#${e.id}`;
+    a.dataset.ruta = e.id;
+    a.textContent = e.menu;
+    nav.insertBefore(a, sobreMi);
+  });
+}
+
+// Una carta por entrada (la más reciente primero) y el resto de la hoja con fundas vacías
+function pintarCartas() {
+  const lista = document.getElementById('fundas');
+  lista.innerHTML = '';
+  const recientes = [...ENTRADAS].reverse();
+
+  recientes.forEach(e => {
+    const nivel = NIVELES[e.nivel];
+    const li = document.createElement('li');
+    li.className = 'funda';
+    li.dataset.nivel = e.nivel;
+    li.innerHTML = `
+      <a class="carta${e.nivel === 'rara' ? ' carta-holo' : ''}" href="#${e.id}">
+        <span class="carta-arte"><img src="${e.portada}" alt="" width="240" height="240"></span>
+        <span class="carta-nombre"></span>
+        <span class="carta-pie"><span>${fechaCorta(e.fecha)}</span><b class="simbolo" title="Nivel: ${nivel.texto.toLowerCase()}">${nivel.simbolo}</b></span>
+      </a>`;
+    li.querySelector('.carta-nombre').textContent = e.titulo;
+    lista.append(li);
+  });
+
+  for (let i = recientes.length; i < FUNDAS_POR_HOJA; i++) {
+    const vacia = document.createElement('li');
+    vacia.className = 'funda funda-vacia';
+    vacia.setAttribute('aria-hidden', 'true');
+    lista.append(vacia);
+  }
+}
+
+// Una sección <article> por entrada, oculta hasta que se navega a ella
+function pintarArticulos() {
+  const contenedor = document.getElementById('contenedor-entradas');
+  ENTRADAS.forEach(e => {
+    const nivel = NIVELES[e.nivel];
+    const articulo = document.createElement('article');
+    articulo.className = 'vista entrada';
+    articulo.id = `vista-${e.id}`;
+    articulo.dataset.vista = e.id;
+    articulo.dataset.id = e.id;
+    articulo.hidden = true;
+    // El cuerpo es HTML escrito por mí en el JSON (contenido de confianza), por eso se usa innerHTML
+    articulo.innerHTML = `
+      <header class="entrada-cabecera">
+        <p class="entrada-meta"><b class="simbolo">${nivel.simbolo}</b> ${nivel.texto} <span>${fechaLarga(e.fecha)}</span> <span class="tiempo-lectura"></span></p>
+        <h1>${e.titulo}</h1>
+        <p class="entrada-entradilla">${e.entradilla}</p>
+      </header>
+      ${e.cuerpo}`;
+    contenedor.append(articulo);
+  });
+}
+
+/* =========================================================
    1. NAVEGACIÓN: muestra solo la sección que indica el #hash
    ========================================================= */
 function mostrarVista() {
@@ -43,10 +145,11 @@ function mostrarVista() {
   // Si el hash no corresponde a ninguna vista (p. ej. #contenido), mostramos el inicio
   if (!vistaActiva) vistaActiva = document.getElementById('vista-inicio');
 
-  vistas.forEach(v => { v.hidden = v !== vistaActiva; });
+  // Se consultan en cada llamada porque las entradas se añaden después de cargar el JSON
+  document.querySelectorAll('.vista').forEach(v => { v.hidden = v !== vistaActiva; });
 
   // Marca en el menú la sección actual
-  enlacesMenu.forEach(a => {
+  nav.querySelectorAll('a').forEach(a => {
     if (a.dataset.ruta === vistaActiva.dataset.vista) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
@@ -110,7 +213,6 @@ function cerrarMenuMovil() {
    4. FILTRO DE ENTRADAS POR NIVEL (rareza)
    ========================================================= */
 const botonesFiltro = document.querySelectorAll('.filtro');
-const fundasConCarta = document.querySelectorAll('.funda[data-nivel]');
 const notaFiltro = document.getElementById('nota-filtro');
 
 botonesFiltro.forEach(boton => {
@@ -125,7 +227,8 @@ botonesFiltro.forEach(boton => {
 
     // En vez de quitar las cartas, se "apagan" para que la carpeta mantenga su forma
     let visibles = 0;
-    fundasConCarta.forEach(funda => {
+    // Se buscan en cada clic porque las cartas se crean tras cargar el JSON
+    document.querySelectorAll('.funda[data-nivel]').forEach(funda => {
       const coincide = filtro === 'todas' || funda.dataset.nivel === filtro;
       funda.classList.toggle('oculta', !coincide);
       funda.querySelector('.carta').tabIndex = coincide ? 0 : -1;
@@ -133,7 +236,7 @@ botonesFiltro.forEach(boton => {
     });
 
     notaFiltro.textContent = filtro === 'todas'
-      ? '3 entradas. Los huecos libres se irán llenando.'
+      ? `${ENTRADAS.length} entradas. Los huecos libres se irán llenando.`
       : `${visibles} ${visibles === 1 ? 'entrada' : 'entradas'} de este nivel.`;
   });
 });
@@ -141,11 +244,13 @@ botonesFiltro.forEach(boton => {
 /* =========================================================
    5. TIEMPO DE LECTURA Y BARRA DE PROGRESO
    ========================================================= */
-document.querySelectorAll('.entrada').forEach(entrada => {
-  const palabras = entrada.textContent.trim().split(/\s+/).length;
-  const minutos = Math.max(1, Math.round(palabras / 200)); // ~200 palabras por minuto
-  entrada.querySelector('.tiempo-lectura').textContent = `${minutos} min de lectura`;
-});
+function calcularTiempoLectura() {
+  document.querySelectorAll('.entrada').forEach(entrada => {
+    const palabras = entrada.textContent.trim().split(/\s+/).length;
+    const minutos = Math.max(1, Math.round(palabras / 200)); // ~200 palabras por minuto
+    entrada.querySelector('.tiempo-lectura').textContent = `${minutos} min de lectura`;
+  });
+}
 
 const barraProgreso = document.getElementById('barra-progreso');
 
@@ -268,10 +373,8 @@ formComentario.addEventListener('submit', evento => {
    7. CALCULADORA DE VALOR ESPERADO (entrada 3)
    valor esperado = probabilidad × valor de la carta buena + valor del resto
    ========================================================= */
-const calculadora = document.getElementById('calculadora');
-const resultado = document.getElementById('resultado');
-
 function calcular() {
+  const resultado = document.getElementById('resultado');
   const num = id => Math.max(0, parseFloat(document.getElementById(id).value) || 0);
   const precio = num('precio-sobre');
   const prob = Math.min(100, num('prob-rara')) / 100;
@@ -287,10 +390,16 @@ function calcular() {
       : `De media ganas ${euros(diferencia)} por sobre. Este set sí compensa abrirlo.`);
 }
 
-calculadora.addEventListener('input', calcular);
-calculadora.addEventListener('submit', e => e.preventDefault());
+// La calculadora llega dentro del JSON, así que se activa después de pintar las entradas
+function iniciarCalculadora() {
+  const calculadora = document.getElementById('calculadora');
+  if (!calculadora) return;
+  calculadora.addEventListener('input', calcular);
+  calculadora.addEventListener('submit', e => e.preventDefault());
+  calcular();
+}
 
 /* ---------- Arranque ---------- */
 aplicarTema(document.documentElement.dataset.tema === 'noche' ? 'noche' : 'dia');
-calcular();
-mostrarVista();
+mostrarVista();    // muestra la portada (o la vista del #hash) mientras llegan los datos
+cargarEntradas();  // petición AJAX

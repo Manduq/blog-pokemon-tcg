@@ -31,9 +31,7 @@
 
     <nav id="navegacion" class="navegacion" aria-label="Navegación principal">
       <a href="#inicio" data-ruta="inicio">Inicio</a>
-      <a href="#japones-o-ingles" data-ruta="japones-o-ingles">Japonés o inglés</a>
-      <a href="#proteger-cartas" data-ruta="proteger-cartas">Proteger cartas</a>
-      <a href="#sobres-o-sueltas" data-ruta="sobres-o-sueltas">Sobres o sueltas</a>
+      <!-- Aquí JavaScript añade un enlace por cada entrada de data/entradas.json -->
       <a href="#sobre-mi" data-ruta="sobre-mi">Sobre mí</a>
     </nav>
 
@@ -65,170 +63,16 @@
 
       <!-- La "página de carpeta": 9 fundas, 3 ocupadas por las entradas -->
       <div class="carpeta" aria-label="Entradas del blog">
-        <ul class="fundas" id="fundas">
-          <li class="funda" data-nivel="comun">
-            <a class="carta" href="#proteger-cartas">
-              <span class="carta-arte"><img src="img/proteger-portada.svg" alt="" width="240" height="240"></span>
-              <span class="carta-nombre">Proteger tus cartas sin gastar de más</span>
-              <span class="carta-pie"><span>3 nov 2026</span><b class="simbolo" title="Nivel: para empezar">●</b></span>
-            </a>
-          </li>
-          <li class="funda" data-nivel="infrecuente">
-            <a class="carta" href="#japones-o-ingles">
-              <span class="carta-arte"><img src="img/idiomas-portada.svg" alt="" width="240" height="240"></span>
-              <span class="carta-nombre">¿Coleccionar en japonés o en inglés?</span>
-              <span class="carta-pie"><span>27 oct 2026</span><b class="simbolo" title="Nivel: intermedio">◆</b></span>
-            </a>
-          </li>
-          <li class="funda" data-nivel="rara">
-            <a class="carta carta-holo" href="#sobres-o-sueltas">
-              <span class="carta-arte"><img src="img/sobres-portada.svg" alt="" width="240" height="240"></span>
-              <span class="carta-nombre">Abrir sobres o comprar sueltas: las cuentas</span>
-              <span class="carta-pie"><span>10 nov 2026</span><b class="simbolo" title="Nivel: avanzado">★</b></span>
-            </a>
-          </li>
-          <li class="funda funda-vacia" aria-hidden="true"></li>
-          <li class="funda funda-vacia" aria-hidden="true"></li>
-          <li class="funda funda-vacia" aria-hidden="true"></li>
-          <li class="funda funda-vacia" aria-hidden="true"></li>
-          <li class="funda funda-vacia" aria-hidden="true"></li>
-          <li class="funda funda-vacia" aria-hidden="true"></li>
+        <ul class="fundas" id="fundas" aria-busy="true">
+          <!-- JavaScript crea aquí una carta por entrada y completa la hoja con fundas vacías -->
         </ul>
-        <p class="carpeta-nota" id="nota-filtro" aria-live="polite">3 entradas. Los huecos libres se irán llenando.</p>
+        <p class="carpeta-nota" id="nota-filtro" aria-live="polite">Cargando entradas…</p>
       </div>
     </section>
 
-    <!-- ============ VISTA: ENTRADA 1 ============ -->
-    <article class="vista entrada" id="vista-japones-o-ingles" data-vista="japones-o-ingles" data-id="japones-o-ingles" hidden>
-      <header class="entrada-cabecera">
-        <p class="entrada-meta"><b class="simbolo">◆</b> Intermedio <span>27 de octubre de 2026</span> <span class="tiempo-lectura"></span></p>
-        <h1>¿Coleccionar en japonés o en inglés?</h1>
-        <p class="entrada-entradilla">Las mismas cartas salen en varios idiomas, pero no son el mismo producto. Esto es lo que cambia y cómo lo decido yo.</p>
-      </header>
-
-      <figure class="figura-ancha">
-        <img src="img/idiomas-sobres.svg" alt="Comparativa de un sobre japonés de 5 cartas y un sobre inglés de 10 cartas" width="760" height="380">
-        <figcaption>Un sobre japonés de expansión normal trae 5 cartas; uno inglés, 10.</figcaption>
-      </figure>
-
-      <div class="entrada-cuerpo">
-        <p>Cuando empecé compraba solo en inglés, porque era lo que había en las tiendas de Barcelona. Al tiempo un amigo que vive en Japón me trajo unos sobres y descubrí que el producto japonés funciona de otra manera.</p>
-
-        <h2>Qué cambia entre un idioma y otro</h2>
-        <ul>
-          <li><strong>Calendario.</strong> Las expansiones salen antes en Japón y, meses después, en inglés reorganizadas en sets más grandes que juntan cartas de varias japonesas.</li>
-          <li><strong>Formato del sobre.</strong> El sobre japonés es más pequeño y barato por unidad; el inglés trae más cartas, contando comunes y la carta de energía.</li>
-          <li><strong>Acabado.</strong> Muchos coleccionistas valoran el centrado y el corte de la impresión japonesa. En inglés el centrado varía más de una carta a otra.</li>
-          <li><strong>Mercado.</strong> Para vender o intercambiar en Europa, el inglés se mueve más rápido. El japonés tiene su público, pero es más de nicho.</li>
-        </ul>
-
-        <figure>
-          <img src="img/idiomas-tabla.svg" alt="Tabla comparativa: japonés con mejor acabado y más barato por sobre; inglés con más demanda en Europa" width="680" height="300">
-          <figcaption>Mi resumen rápido de los dos idiomas.</figcaption>
-        </figure>
-
-        <h2>Cómo lo decido yo</h2>
-        <p>Mi regla es sencilla: <strong>si la carta la quiero para mirarla, la busco en japonés; si cuento con venderla o cambiarla algún día, en inglés.</strong> Las ilustraciones son las mismas, así que para la carpeta personal el japonés me sale mejor de precio y de acabado.</p>
-        <p>Lo que no recomiendo es mezclar idiomas dentro de un mismo set en la carpeta: queda raro y cuesta más saber qué te falta.</p>
-
-        <aside class="consejo">
-          <p><strong>Antes de comprar japonés fuera de Japón</strong>, calcula envío y aduana. Un sobre barato deja de serlo si pagas 20 € de gestión al recibirlo.</p>
-        </aside>
-      </div>
-    </article>
-
-    <!-- ============ VISTA: ENTRADA 2 ============ -->
-    <article class="vista entrada" id="vista-proteger-cartas" data-vista="proteger-cartas" data-id="proteger-cartas" hidden>
-      <header class="entrada-cabecera">
-        <p class="entrada-meta"><b class="simbolo">●</b> Para empezar <span>3 de noviembre de 2026</span> <span class="tiempo-lectura"></span></p>
-        <h1>Proteger tus cartas sin gastar de más</h1>
-        <p class="entrada-entradilla">No hace falta meter cada carta en un bloque de metacrilato. Con tres niveles de protección tienes la colección cubierta.</p>
-      </header>
-
-      <figure class="figura-ancha">
-        <img src="img/proteger-capas.svg" alt="Esquema de capas: carta, funda interior ajustada, funda exterior y toploader rígido" width="760" height="380">
-        <figcaption>De dentro a fuera: funda ajustada, funda normal y toploader.</figcaption>
-      </figure>
-
-      <div class="entrada-cuerpo">
-        <p>La primera carta buena que saqué la dejé suelta en una caja. A la semana tenía una esquina blanda. Desde entonces sigo un sistema por niveles según lo que vale la carta para mí.</p>
-
-        <h2>Los tres niveles que uso</h2>
-        <ol>
-          <li><strong>Comunes y repetidas:</strong> sin funda, en cajas de cartón para cartas, ordenadas por set.</li>
-          <li><strong>Cartas que quiero conservar:</strong> funda individual y a la carpeta. Es lo que más uso.</li>
-          <li><strong>Las más valiosas:</strong> funda ajustada, encima una funda normal y dentro de un toploader rígido.</li>
-        </ol>
-
-        <figure>
-          <img src="img/proteger-carpeta.svg" alt="Carpeta de 9 bolsillos con carga lateral abierta" width="680" height="340">
-          <figcaption>Carpeta de 9 bolsillos con apertura lateral: las cartas no se salen al girarla.</figcaption>
-        </figure>
-
-        <h2>Qué carpeta comprar</h2>
-        <p>Busca carpetas con <strong>bolsillos de carga lateral</strong> (la carta entra por el costado, no por arriba) y <strong>sin anillas</strong>. Las anillas acaban marcando las cartas de la columna más cercana.</p>
-        <p>Evita las hojas de PVC baratas: con los años pueden amarillear y pegarse a las cartas. Si el fabricante dice “sin PVC” o “libre de ácido”, mejor.</p>
-
-        <aside class="consejo">
-          <p><strong>Truco:</strong> mete la carta en la funda boca abajo y con la abertura hacia abajo al ponerla en el toploader. Así entra menos polvo.</p>
-        </aside>
-      </div>
-    </article>
-
-    <!-- ============ VISTA: ENTRADA 3 ============ -->
-    <article class="vista entrada" id="vista-sobres-o-sueltas" data-vista="sobres-o-sueltas" data-id="sobres-o-sueltas" hidden>
-      <header class="entrada-cabecera">
-        <p class="entrada-meta"><b class="simbolo">★</b> Avanzado <span>10 de noviembre de 2026</span> <span class="tiempo-lectura"></span></p>
-        <h1>Abrir sobres o comprar sueltas: las cuentas</h1>
-        <p class="entrada-entradilla">Abrir sobres es divertido, pero si buscas una carta concreta casi nunca sale a cuenta. Aquí tienes cómo calcularlo para cualquier set.</p>
-      </header>
-
-      <figure class="figura-ancha">
-        <img src="img/sobres-ev.svg" alt="Gráfico de barras: el valor medio de las cartas de un sobre queda por debajo de su precio en el ejemplo" width="760" height="380">
-        <figcaption>Ejemplo inventado: el valor medio de lo que sale queda por debajo de lo que cuesta el sobre.</figcaption>
-      </figure>
-
-      <div class="entrada-cuerpo">
-        <p>Los coleccionistas lo llaman <strong>valor esperado</strong>: lo que vale de media lo que sale de un sobre. Se calcula multiplicando el precio de cada tipo de carta por la probabilidad de que salga, y sumando.</p>
-
-        <h2>Calcúlalo tú</h2>
-        <p>Pon el precio del sobre y el valor medio que esperas sacar. Las probabilidades salen de las tasas de aparición que publica la comunidad para cada set.</p>
-
-        <!-- Calculadora interactiva -->
-        <form class="calculadora" id="calculadora" novalidate>
-          <div class="campo">
-            <label for="precio-sobre">Precio del sobre (€)</label>
-            <input id="precio-sobre" type="number" min="0" step="0.5" value="5">
-          </div>
-          <div class="campo">
-            <label for="prob-rara">Probabilidad de una carta buena (%)</label>
-            <input id="prob-rara" type="number" min="0" max="100" step="1" value="8">
-          </div>
-          <div class="campo">
-            <label for="valor-rara">Valor de esa carta (€)</label>
-            <input id="valor-rara" type="number" min="0" step="1" value="30">
-          </div>
-          <div class="campo">
-            <label for="valor-resto">Valor del resto del sobre (€)</label>
-            <input id="valor-resto" type="number" min="0" step="0.1" value="0.8">
-          </div>
-          <output class="resultado" id="resultado" for="precio-sobre prob-rara valor-rara valor-resto" aria-live="polite"></output>
-        </form>
-
-        <h2>Cuándo sí abro sobres</h2>
-        <ul>
-          <li>Cuando el set acaba de salir y aún no hay precios fiables de las sueltas.</li>
-          <li>Con amigos, como plan. Ahí pago por el rato, no por las cartas.</li>
-          <li>Cuando quiero el set completo de comunes y poco comunes: sale más barato que comprarlas una a una.</li>
-        </ul>
-        <p>Para todo lo demás, si quiero una carta en concreto, la compro suelta. Me ahorro dinero y la elijo bien centrada.</p>
-
-        <figure>
-          <img src="img/sobres-decision.svg" alt="Diagrama de decisión: si buscas una carta concreta, compra suelta; si buscas el set o la experiencia, abre sobres" width="680" height="300">
-          <figcaption>Mi diagrama mental antes de pasar por caja.</figcaption>
-        </figure>
-      </div>
-    </article>
+    <!-- ============ VISTAS DE ENTRADAS ============
+         Se generan con JavaScript a partir de data/entradas.json (petición AJAX con fetch) -->
+    <div id="contenedor-entradas"></div>
 
     <!-- ============ VISTA: SOBRE MÍ ============ -->
     <section class="vista vista-sobre-mi" id="vista-sobre-mi" data-vista="sobre-mi" hidden>
